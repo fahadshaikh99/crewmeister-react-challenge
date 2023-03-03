@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import absences from '../../data/mock/absences.json';
 import members from '../../data/mock/members.json';
+import { Table } from 'antd';
+import { listAbsencesColumns } from './listAbsencesColumns';
 
 
 
@@ -9,9 +11,6 @@ const Home = () => {
     const [listAbsences, setListAbsences] = useState([])
 
     useEffect(() => {
-        console.log("List absences ", absences)
-        console.log("List Members: ", members)
-
         // convert members array into object 
         const membersObject = createMembersObjectByUserId()
         // create a combine list of absences with members
@@ -30,6 +29,8 @@ const Home = () => {
     const createAbsencesListWithMembers = (membersObject) => {
         const absenceList = absences?.payload?.map(obj => ({
             name: membersObject[obj.userId]?.name,
+            status: obj?.confirmedAt ? 'Confirmed' : obj?.rejectedAt ? 'Rejected' : 'Requested',
+            period: `${obj?.startDate} to ${obj.endDate}`,
             ...obj
         }));
         return absenceList
@@ -37,7 +38,7 @@ const Home = () => {
 
     return (
         <div>
-            Home
+            <Table columns={listAbsencesColumns} dataSource={listAbsences} rowKey="id" />
         </div>
     )
 }
