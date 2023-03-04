@@ -1,6 +1,6 @@
-import { Table, DatePicker, Tag } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
-const { RangePicker } = DatePicker;
+import { Table, DatePicker, Tag, Space, Button } from 'antd';
+import { handleExportToOutlook } from '../../utils';
+
 
 export const listAbsencesColumns = [
     {
@@ -42,6 +42,13 @@ export const listAbsencesColumns = [
             )
         }
 
+    },
+    {
+        title: 'Action',
+        key: 'action',
+        render: (text, record) => (
+            <Button onClick={() => handleExportToOutlook(record)}>Export to Outlook</Button>
+        ),
     },
 ];
 

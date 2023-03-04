@@ -4,8 +4,6 @@ import members from '../../data/mock/members.json';
 import { Table } from 'antd';
 import { listAbsencesColumns } from './listAbsencesColumns';
 
-
-
 const Home = () => {
 
     const [listAbsences, setListAbsences] = useState([])
