@@ -28,7 +28,7 @@ const Home = () => {
         const absenceList = absences?.payload?.map(obj => ({
             name: membersObject[obj.userId]?.name,
             status: obj?.confirmedAt ? 'Confirmed' : obj?.rejectedAt ? 'Rejected' : 'Requested',
-            period: `${obj?.startDate} to ${obj.endDate}`,
+            period: obj?.startDate,
             ...obj
         }));
         return absenceList
@@ -36,6 +36,7 @@ const Home = () => {
 
     return (
         <div>
+            <div>Total number of rows: {listAbsences.length}</div>
             <Table columns={listAbsencesColumns} dataSource={listAbsences} rowKey="id" />
         </div>
     )
