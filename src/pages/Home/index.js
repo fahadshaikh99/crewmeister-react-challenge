@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import absences from '../../data/mock/absences.json';
 import members from '../../data/mock/members.json';
-import { Table, DatePicker } from 'antd';
+import { Table, DatePicker, Spin } from 'antd';
 import { listAbsencesColumns } from './listAbsencesColumns';
 import './home.css'
 const { RangePicker } = DatePicker;
@@ -10,6 +10,7 @@ const Home = () => {
 
     const [listAbsences, setListAbsences] = useState([])
     const [dateFilter, setDateFilter] = useState([]);
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         // convert members array into object 
@@ -17,6 +18,7 @@ const Home = () => {
         // create a combine list of absences with members
         const listAbsencesWithMembers = createAbsencesListWithMembers(membersObject)
         setListAbsences(listAbsencesWithMembers)
+        setLoading(false)
     }, [])
 
     const createMembersObjectByUserId = () => {
@@ -30,7 +32,7 @@ const Home = () => {
     const createAbsencesListWithMembers = (membersObject) => {
         const absenceList = absences?.payload?.map(obj => ({
             name: membersObject[obj.userId]?.name,
-            status: obj?.confirmedAt ? 'Confirmed' : obj?.rejectedAt ? 'Rejected' : 'Requested',
+            status: obj?.confirmedAt ? 'confirmed' : obj?.rejectedAt ? 'rejected' : 'requested',
             period: `${obj?.startDate} to ${obj.endDate}`,
             ...obj
         }));
@@ -50,26 +52,30 @@ const Home = () => {
     });
 
     return (
-        <div className='my-component'>
-
-            <h1>
-                Total number of absences: {listAbsences.length}
-            </h1>
-            <RangePicker onChange={handleDateFilterChange} style={{ marginBottom: "16px" }} />
-            <Table
-                columns={listAbsencesColumns}
-                dataSource={filteredDataSource}
-                rowKey="id"
-                style={{
-                    border: "1px solid #ccc",
-                    borderRadius: "8px",
-                    overflowX: "auto",
-                    width: "100%" // Set the width to 100%
-                }}
-            />
-        </div>
+        <Spin spinning={loading}>
+            <div className='my-component'>
 
 
+                <h1>
+                    Total number of absences: {listAbsences.length}
+                </h1>
+                <RangePicker
+                    onChange={handleDateFilterChange}
+                    style={{ marginBottom: "16px" }}
+                />
+                <Table
+                    columns={listAbsencesColumns}
+                    dataSource={filteredDataSource}
+                    rowKey="id"
+                    style={{
+                        border: "1px solid #ccc",
+                        borderRadius: "8px",
+                        width: "100%",
+                    }}
+                />
+
+            </div>
+        </Spin>
     )
 }
 

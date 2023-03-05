@@ -1,15 +1,13 @@
-import { Table, DatePicker, Tag, Space, Button } from 'antd';
+import { Tag, Button } from 'antd';
 import { handleExportToOutlook } from '../../utils';
-import moment from 'moment';
-const { RangePicker } = DatePicker;
 
 
 export const listAbsencesColumns = [
     {
-        title: 'ID',
+        title: 'Id',
         dataIndex: 'id',
         key: 'id',
-        width: '5%' // Set the width of the ID column to 10% of the table width
+        width: '5%',
     },
     {
         title: 'Name',
@@ -45,25 +43,30 @@ export const listAbsencesColumns = [
     {
         title: 'Status',
         dataIndex: 'status',
-        rowClassName: (record) => {
+        render: (record) => {
+            let color = 'green'
+            if (record == 'confirmed') color = 'green'
+            else if (record == 'requested') color = 'blue'
+            else if (record == 'rejected') color = 'red'
+            else color = 'orange'
             return (
-                <Tag color={'orange'} key={1}>
-                    {record}
+                <Tag color={color} key={1}>
+                    {record.toUpperCase()}
                 </Tag>
             )
         },
         filters: [
             {
                 text: 'Confirmed',
-                value: 'Confirmed',
+                value: 'confirmed',
             },
             {
                 text: 'Rejected',
-                value: 'Rejected',
+                value: 'rejected',
             },
             {
                 text: 'Requested',
-                value: 'Requested',
+                value: 'requested',
             },
         ],
         onFilter: (value, record) => record.status.indexOf(value) === 0,
