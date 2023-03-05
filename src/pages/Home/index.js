@@ -50,9 +50,8 @@ const Home = () => {
 
     return (
         <div>
-            <div>Total number of absences: {filteredDataSource.length}</div>
+            <div>Total number of absences: {listAbsences.length}</div>
             <RangePicker onChange={handleDateFilterChange} style={{ marginBottom: 16 }} />
-
             <Table columns={listAbsencesColumns} dataSource={filteredDataSource} rowKey="id" />
         </div>
     )
