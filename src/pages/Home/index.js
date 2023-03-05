@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import absences from '../../data/mock/absences.json';
 import members from '../../data/mock/members.json';
-import { Table, DatePicker, Spin } from 'antd';
+import { Table, DatePicker, Spin, Typography } from 'antd';
 import { listAbsencesColumns } from './listAbsencesColumns';
 import './home.css'
 import { createAbsencesListWithMembers, createMembersObjectByUserId } from './functions';
+const { Text } = Typography;
 const { RangePicker } = DatePicker;
 
 const Home = (props) => {
@@ -18,14 +19,15 @@ const Home = (props) => {
         const membersObject = createMembersObjectByUserId(members?.payload)
         // create a combine list of absences with members
         const listAbsencesWithMembers = createAbsencesListWithMembers(absences, membersObject)
+
         setListAbsences(listAbsencesWithMembers)
         setLoading(false)
     }, [])
 
-
     const handleDateFilterChange = (dates) => {
         setDateFilter(dates);
     };
+
     const filteredDataSource = listAbsences?.filter((event) => {
         if (!dateFilter?.length) {
             return true;
@@ -40,17 +42,20 @@ const Home = (props) => {
         width: "100%",
     }
 
+    const pagination = {
+        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} Absences`,
+    };
+
     return (
         <Spin spinning={loading}>
-            <div className='my-component'>
-                <h1>
-                    Total number of absences: {listAbsences.length}
-                </h1>
+            <div className='home-component'>
+                <Text code>Filter by date</Text>
                 <RangePicker
                     onChange={handleDateFilterChange}
-                    style={{ marginBottom: "16px" }}
+                    style={{ marginBottom: "16px", marginTop: "4px" }}
                 />
                 <Table
+                    pagination={pagination}
                     columns={listAbsencesColumns}
                     dataSource={filteredDataSource}
                     rowKey="id"
