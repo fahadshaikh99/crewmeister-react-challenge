@@ -42,6 +42,28 @@ export const listAbsencesColumns = [
                     {record}
                 </Tag>
             )
+        },
+        filters: [
+            {
+                text: 'Confirmed',
+                value: 'Confirmed',
+            },
+            {
+                text: 'Rejected',
+                value: 'Rejected',
+            },
+            {
+                text: 'Requested',
+                value: 'Requested',
+            },
+        ],
+        onFilter: (value, record) => record.status.indexOf(value) === 0,
+        rowClassName: (record) => {
+            return (
+                <Tag color={'orange'} key={1}>
+                    {record}
+                </Tag>
+            )
         }
 
     },
