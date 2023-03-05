@@ -5,6 +5,7 @@ import { Table, DatePicker, Spin, Typography } from 'antd';
 import { listAbsencesColumns } from './listAbsencesColumns';
 import './home.css'
 import { createAbsencesListWithMembers, createMembersObjectByUserId } from './functions';
+import { lang } from '../../languages';
 const { Text } = Typography;
 const { RangePicker } = DatePicker;
 
@@ -43,13 +44,13 @@ const Home = (props) => {
     }
 
     const pagination = {
-        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} Absences`,
+        showTotal: (total, range) => `${range[0]}-${range[1]} ${lang.of} ${total} ${lang.absences}`,
     };
 
     return (
         <Spin spinning={loading}>
             <div className='home-component'>
-                <Text code>Filter by date</Text>
+                <Text code>{lang.filter_by_date}</Text>
                 <RangePicker
                     onChange={handleDateFilterChange}
                     style={{ marginBottom: "16px", marginTop: "4px" }}
