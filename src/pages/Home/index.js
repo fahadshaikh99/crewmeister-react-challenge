@@ -4,9 +4,10 @@ import members from '../../data/mock/members.json';
 import { Table, DatePicker, Spin } from 'antd';
 import { listAbsencesColumns } from './listAbsencesColumns';
 import './home.css'
+import { createAbsencesListWithMembers, createMembersObjectByUserId } from './functions';
 const { RangePicker } = DatePicker;
 
-const Home = () => {
+const Home = (props) => {
 
     const [listAbsences, setListAbsences] = useState([])
     const [dateFilter, setDateFilter] = useState([]);
@@ -14,35 +15,17 @@ const Home = () => {
 
     useEffect(() => {
         // convert members array into object 
-        const membersObject = createMembersObjectByUserId()
+        const membersObject = createMembersObjectByUserId(members?.payload)
         // create a combine list of absences with members
-        const listAbsencesWithMembers = createAbsencesListWithMembers(membersObject)
+        const listAbsencesWithMembers = createAbsencesListWithMembers(absences, membersObject)
         setListAbsences(listAbsencesWithMembers)
         setLoading(false)
     }, [])
 
-    const createMembersObjectByUserId = () => {
-        const userObject = members?.payload?.reduce((acc, curr) => {
-            acc[curr.userId] = curr;
-            return acc;
-        }, {});
-        return userObject
-    }
-
-    const createAbsencesListWithMembers = (membersObject) => {
-        const absenceList = absences?.payload?.map(obj => ({
-            name: membersObject[obj.userId]?.name,
-            status: obj?.confirmedAt ? 'confirmed' : obj?.rejectedAt ? 'rejected' : 'requested',
-            period: `${obj?.startDate} to ${obj.endDate}`,
-            ...obj
-        }));
-        return absenceList
-    }
 
     const handleDateFilterChange = (dates) => {
         setDateFilter(dates);
     };
-
     const filteredDataSource = listAbsences?.filter((event) => {
         if (!dateFilter?.length) {
             return true;
@@ -51,11 +34,15 @@ const Home = () => {
         return new Date(event?.startDate) >= startDate && new Date(event?.endDate) <= endDate;
     });
 
+    const tableStyle = {
+        border: "1px solid #ccc",
+        borderRadius: "8px",
+        width: "100%",
+    }
+
     return (
         <Spin spinning={loading}>
             <div className='my-component'>
-
-
                 <h1>
                     Total number of absences: {listAbsences.length}
                 </h1>
@@ -67,16 +54,10 @@ const Home = () => {
                     columns={listAbsencesColumns}
                     dataSource={filteredDataSource}
                     rowKey="id"
-                    style={{
-                        border: "1px solid #ccc",
-                        borderRadius: "8px",
-                        width: "100%",
-                    }}
+                    style={tableStyle}
                 />
-
             </div>
         </Spin>
     )
 }
-
 export default Home;
