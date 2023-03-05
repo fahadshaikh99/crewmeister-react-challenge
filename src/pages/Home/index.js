@@ -3,6 +3,7 @@ import absences from '../../data/mock/absences.json';
 import members from '../../data/mock/members.json';
 import { Table, DatePicker } from 'antd';
 import { listAbsencesColumns } from './listAbsencesColumns';
+import './home.css'
 const { RangePicker } = DatePicker;
 
 const Home = () => {
@@ -49,11 +50,26 @@ const Home = () => {
     });
 
     return (
-        <div>
-            <div>Total number of absences: {listAbsences.length}</div>
-            <RangePicker onChange={handleDateFilterChange} style={{ marginBottom: 16 }} />
-            <Table columns={listAbsencesColumns} dataSource={filteredDataSource} rowKey="id" />
+        <div className='my-component'>
+
+            <h1>
+                Total number of absences: {listAbsences.length}
+            </h1>
+            <RangePicker onChange={handleDateFilterChange} style={{ marginBottom: "16px" }} />
+            <Table
+                columns={listAbsencesColumns}
+                dataSource={filteredDataSource}
+                rowKey="id"
+                style={{
+                    border: "1px solid #ccc",
+                    borderRadius: "8px",
+                    overflowX: "auto",
+                    width: "100%" // Set the width to 100%
+                }}
+            />
         </div>
+
+
     )
 }
 

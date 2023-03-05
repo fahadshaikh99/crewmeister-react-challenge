@@ -6,9 +6,15 @@ const { RangePicker } = DatePicker;
 
 export const listAbsencesColumns = [
     {
+        title: 'ID',
+        dataIndex: 'id',
+        key: 'id',
+        width: '5%' // Set the width of the ID column to 10% of the table width
+    },
+    {
         title: 'Name',
         dataIndex: 'name',
-
+        width: '15%'
     },
     {
         title: 'Absence',
@@ -24,14 +30,17 @@ export const listAbsencesColumns = [
             },
         ],
         onFilter: (value, record) => record.type.indexOf(value) === 0,
+        width: '15%',
     },
     {
         title: 'Period',
         dataIndex: 'period',
+        width: '15%'
     },
     {
         title: 'Member note',
         dataIndex: 'memberNote',
+        width: '15%'
     },
     {
         title: 'Status',
@@ -64,7 +73,8 @@ export const listAbsencesColumns = [
                     {record}
                 </Tag>
             )
-        }
+        },
+        width: '15%'
 
     },
     {
@@ -73,6 +83,7 @@ export const listAbsencesColumns = [
         render: (text, record) => (
             <Button onClick={() => handleExportToOutlook(record)}>Export to Outlook</Button>
         ),
+        width: '15%'
     },
 ];
 
