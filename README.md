@@ -31,4 +31,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ### `firebase deploy --only hosting`
 
-Visit the Firebase CLI documentation to learn how to install the CLI or update to its latest version.
+Visit the [Firebase CLI documentation](https://firebase.google.com/docs/cli) to learn how to install the CLI or update to its latest version.
