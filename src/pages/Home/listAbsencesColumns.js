@@ -12,7 +12,7 @@ export const listAbsencesColumns = [
     {
         title: 'Name',
         dataIndex: 'name',
-        width: '15%'
+        width: '10%'
     },
     {
         title: 'Absence',
@@ -33,11 +33,16 @@ export const listAbsencesColumns = [
     {
         title: 'Period',
         dataIndex: 'period',
-        width: '15%'
+        width: '10%'
     },
     {
         title: 'Member note',
         dataIndex: 'memberNote',
+        width: '15%'
+    },
+    {
+        title: 'Admitter note',
+        dataIndex: 'admitterNote',
         width: '15%'
     },
     {
